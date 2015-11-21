@@ -9,6 +9,7 @@ define(["underscore", "knockout", "jquery", "./fetchData"],
 		this.parcelData = ko.observableArray();
 		this.apiHitsCount = ko.observable();
 		this.parcelCount = ko.observable();
+		this.parcelDetails = ko.observable();
 
 		this.fetchParcel = function(){
 			fetchData(PARCEL_QUERY, this.fetchParcelSuccessHandler, this.fetchParcelErrorHandler);	
@@ -17,6 +18,7 @@ define(["underscore", "knockout", "jquery", "./fetchData"],
 		this.fetchParcelSuccessHandler = function(data) {
 			this.parcelCount(data.parcels.length);
 			this.parcelData(data.parcels);
+			this.showDetails(data.parcels[0]);
 		};
 
 		this.fetchParcelErrorHandler = function(xhr, status, err) {
@@ -35,8 +37,25 @@ define(["underscore", "knockout", "jquery", "./fetchData"],
 			console.error("fetchApiHits", status, err.toString());
 		};
 
+		//TODO: Use KO mapping
+		this.showDetails = function(data){
+			this.parcelDetails({
+				color: ko.observable(data.color),
+				date: ko.observable(data.date),
+				image: ko.observable(data.image),
+				link: ko.observable(data.link),
+				name: ko.observable(data.name),
+				phone: ko.observable(data.phone),
+				price: ko.observable(data.price),
+				quantity: ko.observable(data.quantity),
+				type: ko.observable(data.type),
+				weight: ko.observable(data.weight),
+				//live_location: {latitude: 12.936543, longitude: 77.611538}
+			});
+		};
+
 		_.bindAll(this, 'fetchParcel', 'fetchParcelSuccessHandler', 'fetchParcelErrorHandler',
-		 'fetchApiHits', 'fetchApiHitsSuccessHandler', 'fetchApiHitsErrorHandler');
+		 'fetchApiHits', 'fetchApiHitsSuccessHandler', 'fetchApiHitsErrorHandler', 'showDetails');
 
 		this.fetchParcel();
 		this.fetchApiHits();

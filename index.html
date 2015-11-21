@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Ztracker</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+    <link href="css/style.css" rel="stylesheet">
     <script data-main="src/app" src="src/require.js"></script>
 </head>
 <body>
@@ -21,12 +22,24 @@
                 <ul class="list-group list-unstyled">
                     <li class="list-group-item active">Parcels</li>
                     <!-- ko foreach:parcelData -->
-                    <li><a class="list-group-item" data-bind="text: $data.name"></a></li>
+                    <li><a class="list-group-item" data-bind="text: $data.name, click: $parent.showDetails"></a></li>
                     <!-- /ko -->
                 </ul>
             </section>
             <section class="col-md-6">
                 <!-- item details -->
+                <div class="item-details" data-bind="visible:parcelDetails,with:parcelDetails">
+                    <div class="col-md-6"><img class="item-details_img" data-bind="attr:{src:image}"></img></div>
+                    <div class="col-md-6">
+                        <div><span data-bind="text:name"></span></div>
+                        <div>Type:<span data-bind="text:type"></span></div>
+                        <div>Price:<span data-bind="text:price"></span></div>
+                        <div>Weight:<span data-bind="text:weight"></span></div>
+                        <div>Quantity:<span data-bind="text:quantity"></span></div>
+                        <div>Phone:<span data-bind="text:phone"></span></div>
+                        <div>Color:<span data-bind="text:color"></span></div>
+                    </div>
+                </div>
             </section>
         </div>
     </div>
