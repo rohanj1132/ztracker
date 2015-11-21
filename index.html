@@ -4,30 +4,31 @@
     <meta charset="UTF-8">
     <title>Ztracker</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+    <script data-main="src/app" src="src/require.js"></script>
 </head>
 <body>
     <header>
-    	<div>Brand icon</div>
-    	<ul>
-    		<li>api hit</li>
-    		<li>total parcel</li>
-    	</ul>
+        <div>Parcel Tracker</div>
+        <ul class="list-inline">
+            <li data-bind="visible:apiHitsCount">Api Hit:<span data-bind="text:apiHitsCount"></span></li>
+            <li data-bind="visible:parcelCount">Total Parcel:<span data-bind="text:parcelCount"></span></li>
+        </ul>
     </header>
-    <section>
-    <!-- item list -->
-    	<ul>
-    		<li>item 1</li>
-    		<li>item 2</li>
-    		<li>item 3</li>
-    		<li>item 4</li>
-    		<li>item 5</li>
-    		<li>item 6</li>
-    		<li>item 7</li>
-    	</ul>
-    </section>
-    <section>
-    	<!-- item details -->
-    </section>
-
+    <div class="container-fluid">
+        <div class="row">
+            <section class="col-md-6">
+            <!-- item list -->
+                <ul class="list-group list-unstyled">
+                    <li class="list-group-item active">Parcels</li>
+                    <!-- ko foreach:parcelData -->
+                    <li><a class="list-group-item" data-bind="text: $data.name"></a></li>
+                    <!-- /ko -->
+                </ul>
+            </section>
+            <section class="col-md-6">
+                <!-- item details -->
+            </section>
+        </div>
+    </div>
 </body>
 </html>
