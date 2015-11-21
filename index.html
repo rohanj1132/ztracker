@@ -5,6 +5,7 @@
     <title>Ztracker</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
     <link href="css/style.css" rel="stylesheet">
+    <script src="http://maps.google.com/maps/api/js?key=AIzaSyCVVzQL17uz2Jj6D6NbGqIkf5snj4VYqn4&language=en"></script>
     <script data-main="src/app" src="src/require.js"></script>
 </head>
 <body>
@@ -25,20 +26,29 @@
                     <li><a class="list-group-item" data-bind="text: $data.name, click: $parent.showDetails"></a></li>
                     <!-- /ko -->
                 </ul>
+                <div>
+                    <span>Sort By:</span>
+                    <button data-bind="click:sortList" value="name" name="name">Name</button>
+                    <button data-bind="click:sortList" value="price" name="price">Price</button>
+                    <button data-bind="click:sortList" value="weight" name="weight">Weight</button>
+                </div>
             </section>
             <section class="col-md-6">
                 <!-- item details -->
                 <div class="item-details" data-bind="visible:parcelDetails,with:parcelDetails">
-                    <div class="col-md-6"><img class="item-details_img" data-bind="attr:{src:image}"></img></div>
-                    <div class="col-md-6">
-                        <div><span data-bind="text:name"></span></div>
-                        <div>Type:<span data-bind="text:type"></span></div>
-                        <div>Price:<span data-bind="text:price"></span></div>
-                        <div>Weight:<span data-bind="text:weight"></span></div>
-                        <div>Quantity:<span data-bind="text:quantity"></span></div>
-                        <div>Phone:<span data-bind="text:phone"></span></div>
-                        <div>Color:<span data-bind="text:color"></span></div>
-                    </div>
+                    <section class="row">
+                        <div class="col-md-6"><img class="item-details__img" data-bind="attr:{src:image}"></img></div>
+                        <div class="col-md-6">
+                            <div><span data-bind="text:name"></span></div>
+                            <div>Type:<span data-bind="text:type"></span></div>
+                            <div>Price:<span data-bind="text:price"></span></div>
+                            <div>Weight:<span data-bind="text:weight"></span></div>
+                            <div>Quantity:<span data-bind="text:quantity"></span></div>
+                            <div>Phone:<span data-bind="text:phone"></span></div>
+                            <div>Color:<span data-bind="text:color"></span></div>
+                        </div>
+                    </section>
+                    <div id="map_canvas" class="google-maps__canvas"></div>
                 </div>
             </section>
         </div>

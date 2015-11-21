@@ -1,5 +1,5 @@
-define(["underscore", "knockout", "jquery", "./fetchData"],
-	function(_, ko, $, fetchData){
+define(["underscore", "knockout", "jquery", "./fetchData", "./googleMapsIntg"],
+	function(_, ko, $, fetchData, googleMapsIntg){
 
 	var main = function() {
 
@@ -52,10 +52,16 @@ define(["underscore", "knockout", "jquery", "./fetchData"],
 				weight: ko.observable(data.weight),
 				//live_location: {latitude: 12.936543, longitude: 77.611538}
 			});
+			googleMapsIntg(data.live_location.latitude, data.live_location.longitude);
+		};
+
+		this.sortList = function(a,b,c,d,e){
+			console.log(a,b,c,d,e);
 		};
 
 		_.bindAll(this, 'fetchParcel', 'fetchParcelSuccessHandler', 'fetchParcelErrorHandler',
-		 'fetchApiHits', 'fetchApiHitsSuccessHandler', 'fetchApiHitsErrorHandler', 'showDetails');
+		 'fetchApiHits', 'fetchApiHitsSuccessHandler', 'fetchApiHitsErrorHandler', 'showDetails',
+		 'sortList');
 
 		this.fetchParcel();
 		this.fetchApiHits();
