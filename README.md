@@ -1,2 +1,0 @@
-# ztracker
-commit 1

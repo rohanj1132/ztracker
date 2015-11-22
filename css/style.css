@@ -7,6 +7,10 @@
 	text-align: right;
 }
 
+.item-list__element{
+	cursor: pointer;
+}
+
 .item-details__img {
 	height: 200px;
 }

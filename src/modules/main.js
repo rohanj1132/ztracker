@@ -16,14 +16,18 @@ define(["underscore", "knockout", "jquery", "knockoutmapping",
 		this.likedItems;
 
 		this.fetchParcel = function(){
-			fetchData(PARCEL_QUERY, this.fetchParcelSuccessHandler, this.fetchParcelErrorHandler);	
+			var self = this;
+			$.when(fetchData(PARCEL_QUERY, this.fetchParcelSuccessHandler, this.fetchParcelErrorHandler)).done(
+				function(data){
+					self.showDetails(data.parcels[0]);
+				}
+				);	
 		};
 
 		this.fetchParcelSuccessHandler = function(data) {
 			this.parcelCount(data.parcels.length);
 			this.parcelData(data.parcels);
 			this.parcels = data.parcels.slice();
-			this.showDetails(data.parcels[0]);
 		};
 
 		this.fetchParcelErrorHandler = function(xhr, status, err) {
@@ -46,6 +50,9 @@ define(["underscore", "knockout", "jquery", "knockoutmapping",
 			var isItemLiked = this.checkIfItemIsLiked(data);
 			//Adding like information to data
 			data.liked = isItemLiked;
+
+			var eta = Date(data.date);
+			data.eta = eta;
 			//Creating observable item details data
 			this.createDetailsData(data);
 
@@ -103,19 +110,34 @@ define(["underscore", "knockout", "jquery", "knockoutmapping",
 		    this.parcelData.removeAll();
 		    var parcels = this.parcels;
 		    for(var x in parcels) {
-		      if(parcels[x].name.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
+		      if(parcels[x].name.toLowerCase().indexOf(value.toLowerCase()) >= 0 
+		      	|| parcels[x].price.toLowerCase().indexOf(value.toLowerCase()) >= 0 
+		      	|| parcels[x].type.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
 		        this.parcelData.push(parcels[x]);
 		      }
 		    }
-		}
+		};
+
+		this.refreshLocation = function() {
+			var self = this;
+			$.when(fetchData(PARCEL_QUERY, this.fetchParcelSuccessHandler, this.fetchParcelErrorHandler)).done(
+				function(data){
+					googleMapsIntg(self.parcelDetails().live_location.latitude(),
+					 self.parcelDetails().live_location.longitude());
+				}
+			);
+			
+		};
 
 		_.bindAll(this, 'fetchParcel', 'fetchParcelSuccessHandler', 'fetchParcelErrorHandler',
 		 'fetchApiHits', 'fetchApiHitsSuccessHandler', 'fetchApiHitsErrorHandler', 'showDetails',
-		 'sortList', 'likeItem', 'getLikedItems', 'createDetailsData', 'checkIfItemIsLiked', 'search');
+		 'sortList', 'likeItem', 'getLikedItems', 'createDetailsData', 'checkIfItemIsLiked', 
+		 'search', 'refreshLocation');
 
 		this.fetchParcel();
 		this.fetchApiHits();
 		this.query.subscribe(this.search);
+		setTimeout(this.refreshLocation, 300);
 	}
 	
 	return main;

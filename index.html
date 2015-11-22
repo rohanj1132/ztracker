@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Ztracker</title>
+    <title>Parcel Tracker</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
     <link href="css/style.css" rel="stylesheet">
     <script async defer src="https://maps.google.com/maps/api/js?key=AIzaSyCVVzQL17uz2Jj6D6NbGqIkf5snj4VYqn4&language=en"></script>
@@ -23,7 +23,7 @@
         <div class="row">
             <section class="col-md-6">
                 <section>
-                    <input class="form-control search-box" placeholder="Search…" type="search" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
+                    <input class="form-control search-box" placeholder="Search (by parcel name, price, weight)" type="search" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
                 </section>
                 <section class="sort-section">
                 <!-- sort button section -->
@@ -37,7 +37,7 @@
                     <li class="list-group-item active">Parcels</li>
                     <!-- ko foreach:parcelData -->
                     <li>
-                        <a class="list-group-item" data-bind="click: $parent.showDetails">
+                        <a class="list-group-item item-list__element" data-bind="click: $parent.showDetails">
                             <strong class="list-group-item-heading" data-bind="text: $data.name"></strong> 
                             <p class="list-group-item-text">
                                 Rs.<span data-bind="text: $data.price"></span>
@@ -59,12 +59,13 @@
                         </div>
                         <div class="col-md-6">
                             <!-- info section -->
-                            <div>Type:<span data-bind="text:type"></span></div>
-                            <div>Price:<span data-bind="text:price"></span></div>
-                            <div>Weight:<span data-bind="text:weight"></span></div>
-                            <div>Quantity:<span data-bind="text:quantity"></span></div>
-                            <div>Phone:<span data-bind="text:phone"></span></div>
-                            <div>Color:<span data-bind="text:color"></span></div>
+                            <div><strong>Type:</strong><span data-bind="text:type"></span></div>
+                            <div><strong>Price:</strong>Rs.<span data-bind="text:price"></span></div>
+                            <div><strong>Weight:</strong><span data-bind="text:weight"></span></div>
+                            <div><strong>Quantity:</strong><span data-bind="text:quantity"></span></div>
+                            <div><strong>Phone:</strong><span data-bind="text:phone"></span></div>
+                            <div><strong>Color:</strong><span data-bind="text:color"></span></div>
+                            <div><strong>ETA:</strong><span data-bind="text:eta"></span></div>
                         </div>    
                     </div>
                     
@@ -78,7 +79,8 @@
                 <section class="panel">
                         <!-- map section -->
                         <div class="panel-heading"><span>Current Location:</span><span id="current_location"></span></div>
-                        <div id="map_canvas" class="panel-body google-maps__canvas">
+                        <div id="map_canvas" class="panel-body google-maps__canvas"></div>
+                        <div class="panel-footer"><a data-bind="click:refreshLocation">Refresh</a></div>
                 </section>
             </section>
         </div>
