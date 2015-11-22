@@ -39,8 +39,7 @@ define([], function(){
                         placeName = results[0].address_components[0].long_name,
                         latlng = new google.maps.LatLng(lat, lng);
 
-                    var addressContent = document.createTextNode(results[0].formatted_address);
-                    addressEl.appendChild(addressContent);
+                    addressEl.innerHTML = results[0].formatted_address;
                 }
             });  
         }

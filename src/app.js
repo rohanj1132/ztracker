@@ -3,7 +3,8 @@ requirejs.config({
     paths: {
         jquery: '../jquery-2.1.4',
         knockout: '../knockout-3.4.0',
-        underscore: '../underscore'
+        underscore: '../underscore',
+        knockoutmapping: '../knockout.mapping'
     }
 });
 

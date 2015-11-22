@@ -9,64 +9,77 @@
     <script data-main="src/app" src="src/require.js"></script>
 </head>
 <body>
-    <header>
-        <div>Parcel Tracker</div>
-        <ul class="list-inline">
-            <li data-bind="visible:apiHitsCount">Api Hit:<span data-bind="text:apiHitsCount"></span></li>
-            <li data-bind="visible:parcelCount">Total Parcel:<span data-bind="text:parcelCount"></span></li>
-        </ul>
+    <header class="navbar navbar-default">
+        <div class="container-fluid">
+            <a href="#" class="navbar-brand">Parcel Tracker</a>
+            <ul class="list-inline navbar-text navbar-right">
+                <li data-bind="visible:apiHitsCount">API Hits:<span data-bind="text:apiHitsCount"></span></li>
+                <li data-bind="visible:parcelCount">Total Parcels:<span data-bind="text:parcelCount"></span></li>
+            </ul>
+        </div>
     </header>
+
     <div class="container-fluid">
         <div class="row">
             <section class="col-md-6">
+                <section>
+                    <input placeholder="Search…" type="search" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
+                </section>
+                <section class="sort-section">
+                <!-- sort button section -->
+                    <span>Sort By:</span>
+                    <button class="btn btn-default" data-bind="click:sortList" value="name" name="name">Name</button>
+                    <button class="btn btn-default" data-bind="click:sortList" value="price" name="price">Price</button>
+                    <button class="btn btn-default" data-bind="click:sortList" value="weight" name="weight">Weight</button>
+                </section>
             <!-- item list -->
                 <ul class="list-group list-unstyled">
                     <li class="list-group-item active">Parcels</li>
                     <!-- ko foreach:parcelData -->
                     <li>
                         <a class="list-group-item" data-bind="click: $parent.showDetails">
-                            <span class="badge">
-                                Price:<span data-bind="text: $data.price"></span>
-                            </span>
-                            <span data-bind="text: $data.name"></span>    
+                            <strong class="list-group-item-heading" data-bind="text: $data.name"></strong> 
+                            <p class="list-group-item-text">
+                                Rs.<span data-bind="text: $data.price"></span>
+                            </p>   
                         </a>
                     </li>
                     <!-- /ko -->
                 </ul>
-                <div>
-                    <span>Sort By:</span>
-                    <button data-bind="click:sortList" value="name" name="name">Name</button>
-                    <button data-bind="click:sortList" value="price" name="price">Price</button>
-                    <button data-bind="click:sortList" value="weight" name="weight">Weight</button>
-                </div>
             </section>
-            <section class="col-md-6">
+            <section class="col-md-6 item-details">
                 <!-- item details -->
-                <div class="item-details" data-bind="visible:parcelDetails,with:parcelDetails">
-                    <section class="row">
-                        <!-- info section -->
-                        <div class="col-md-6"><img class="item-details__img" data-bind="attr:{src:image}"></img></div>
+                <section class="panel panel-default" data-bind="visible:parcelDetails,with:parcelDetails">
+                    <div class="panel-heading">
+                        <div class="panel-title"><a data-bind="text:name,attr:{href:link}"></a></div>
+                    </div>
+                    <div class="panel-body clearfix">
                         <div class="col-md-6">
-                            <div><a data-bind="text:name,attr:{href:link}"></a></div>
+                            <img class="item-details__img" data-bind="attr:{src:image}"></img>
+                        </div>
+                        <div class="col-md-6">
+                            <!-- info section -->
                             <div>Type:<span data-bind="text:type"></span></div>
                             <div>Price:<span data-bind="text:price"></span></div>
                             <div>Weight:<span data-bind="text:weight"></span></div>
                             <div>Quantity:<span data-bind="text:quantity"></span></div>
                             <div>Phone:<span data-bind="text:phone"></span></div>
                             <div>Color:<span data-bind="text:color"></span></div>
-                        </div>
-                    </section>
-                    <section>
-                        <!-- map section -->
-                        <div><span>Current Location:</span><span id="current_location"></span></div>
-                        <div id="map_canvas" class="google-maps__canvas">
-                    </section>
-                    <section>
+                        </div>    
+                    </div>
+                    
+                    <div class="panel-footer">
                         <!-- social section -->
-                        <button>Like</button>
-                        <button>Share</button>
-                    </section>
-                </div>
+                        <button class="btn" data-bind="click:$parent.likeItem, css: {'btn-info': liked, 'btn-default':!liked()}">Like</button>
+                        <button class="btn btn-default">Share</button>
+                    </div>
+                </section>
+                   
+                <section class="panel">
+                        <!-- map section -->
+                        <div class="panel-heading"><span>Current Location:</span><span id="current_location"></span></div>
+                        <div id="map_canvas" class="panel-body google-maps__canvas">
+                </section>
             </section>
         </div>
     </div>
